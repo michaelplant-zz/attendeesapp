@@ -3,6 +3,7 @@ var platform = Ti.Platform.osname;
 //A window object which will be associated with the stack of windows
 exports.ListWindow = function(args) {
 	var AddWindow = require('ui/AddWindow').AddWindow;
+	var EditWindow = require('ui/EditWindow').EditWindow;
 	var self = Ti.UI.createWindow(args);
 	var tableview = Ti.UI.createTableView();
 	var isDone = args.isDone;
@@ -38,7 +39,8 @@ exports.ListWindow = function(args) {
 	}
 
 	tableview.addEventListener('click', function(e) {
-		createConfirmDialog(e.row.id, e.row.title, isDone).show();
+		new EditWindow().open();
+		//createConfirmDialog(e.row.id, e.row.title, isDone).show();
 	});
 
 	Ti.App.addEventListener('app:updateTables', function() {
@@ -52,12 +54,12 @@ var getTableData = function(done) {
 	var db = require('db');
 	var data = [];
 	var row = null;
-	var todoItems = db.selectItems(done);
+	var attendees = db.selectItems(done);
 
-	for (var i = 0; i < todoItems.length; i++) {
+	for (var i = 0; i < attendees.length; i++) {
 		row = Ti.UI.createTableViewRow({
-			id: todoItems[i].id,
-			title: todoItems[i].item,
+			id: attendees[i].id,
+			title: attendees[i].item,
 			color: '#000',
 			font: {
 				fontWeight: 'bold'
@@ -81,7 +83,7 @@ var createConfirmDialog = function(id, title, isDone) {
 			}
 		};
 	} else {
-		buttons = ['Done', 'Delete', 'Cancel'];
+		buttons = ['Contacted', 'Delete', 'Cancel'];
 		clickHandler = function(e) {
 			if (e.index === 0) {
 				db.updateItem(id, 1);
@@ -94,7 +96,7 @@ var createConfirmDialog = function(id, title, isDone) {
 	}
 
 	var confirm = Ti.UI.createAlertDialog({
-		title: 'Change Task Status',
+		title: 'Change Attendee Status',
 		message: title,
 		buttonNames: buttons
 	});

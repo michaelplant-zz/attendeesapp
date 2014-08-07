@@ -18,17 +18,17 @@ else {
 		//create our global tab group
 		globals.tabs = new AppTabGroup(
 			{
-				title: 'Todo',
+				title: 'All',
 				icon: 'images/KS_nav_ui.png',
 				window: new ListWindow({
-					title: 'Todo',
+					title: 'All',
 					backgroundColor: '#fff',
 					navBarHidden: false,
 					isDone: 0,
 					activity: {
 						onCreateOptionsMenu: function(e) {
 							var menu = e.menu;
-							var menuItem = menu.add({ title: "Add Task" });
+							var menuItem = menu.add({ title: "Add Attendee" });
 							menuItem.setIcon("images/ic_menu_add.png");
 							menuItem.addEventListener("click", function(e) {
 								new AddWindow().open();
@@ -38,7 +38,7 @@ else {
 				})
 			},
 			{
-				title: 'Done',
+				title: 'No Contact',
 				icon: 'images/KS_nav_views.png',
 				window: new ListWindow({
 					title: 'Done',
