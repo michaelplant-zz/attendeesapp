@@ -39,7 +39,7 @@ exports.ListWindow = function(args) {
 	}
 
 	tableview.addEventListener('click', function(e) {
-		new EditWindow().open();
+		new EditWindow(e.row.id,e.row.attendeeName,e.row.attendeeTitle).open();
 		//createConfirmDialog(e.row.id, e.row.title, isDone).show();
 	});
 
@@ -59,12 +59,62 @@ var getTableData = function(done) {
 	for (var i = 0; i < attendees.length; i++) {
 		row = Ti.UI.createTableViewRow({
 			id: attendees[i].id,
-			title: attendees[i].item,
-			color: '#000',
-			font: {
-				fontWeight: 'bold'
-			}
+			attendeeName: attendees[i].name,
+			attendeeTitle: attendees[i].title,
+			height: 80
 		});
+		
+		var group = Ti.UI.createLabel({
+			backgroundImage: 'images/icon-flag.png',
+			color: 'white',
+		    text: attendees[i].group,
+		    touchEnabled: false,
+		    left: 20,
+		    width: 40,
+		    height: 40,
+		    font: { fontSize:16 },
+		    textAlign: 'center'
+		});
+		row.add(group);
+		
+		var picture = Ti.UI.createImageView({
+		  image:'/images/profile.jpg',
+		  left: 70,
+		  top: 10,
+		  width: 40,
+		  height: 40
+		});
+		row.add(picture);
+		
+		var name = Ti.UI.createLabel({
+		    text: attendees[i].name,
+		    touchEnabled: false,
+		    left:120,
+		    top: 10,
+		    width: '75%',
+		    height: 20,
+		    font: { fontSize: 16, fontWeight: 'bold' }
+		});
+		row.add(name);
+		
+		var title = Ti.UI.createLabel({
+		    text: attendees[i].title,
+		    touchEnabled: false,
+		    left: 120,
+		    top: 30,
+		    width: 200,
+		    height: 20,
+		    font: { fontSize:16, fontStyle: 'italic' }
+		});
+		row.add(title);
+		
+		var contacted = Ti.UI.createSwitch({
+		  value:attendees[i].contacted, // mandatory property for iOS
+		  right: 10, 
+		  top: 20
+		});
+		row.add(contacted);
+		
 		data.push(row);
 	}
 	return data;
