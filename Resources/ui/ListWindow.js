@@ -108,10 +108,21 @@ var getTableData = function(done) {
 		});
 		row.add(title);
 		
-		var contacted = Ti.UI.createSwitch({
-		  value:attendees[i].contacted, // mandatory property for iOS
-		  right: 10, 
-		  top: 20
+		var leadsum = Ti.UI.createLabel({
+		    text: 'Leads: ' + attendees[i].leadsum,
+		    touchEnabled: false,
+		    right: 10,
+		    top: 10,
+		    font: { fontSize:10 }
+		});
+		row.add(leadsum);
+		
+		var contacted = Ti.UI.createLabel({
+		    text: 'Contacted: ' + attendees[i].contacted,
+		    touchEnabled: false,
+		    right: 10,
+		    top: 30,
+		    font: { fontSize:10 }
 		});
 		row.add(contacted);
 		

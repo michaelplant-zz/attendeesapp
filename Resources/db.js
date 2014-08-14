@@ -11,9 +11,9 @@ exports.createDb = function() {
 exports.selectItems = function(_contacted) {
 	var retData = [];
 	var db = Ti.Database.open(DATABASE_NAME);
-	var rows = db.execute('select ROWID, * from attendees where contacted = ?', _contacted);
+	var rows = db.execute('select * from attendees_main where contacted = ?', _contacted);
 	while (rows.isValidRow()) {
-		retData.push({name:rows.fieldByName('name'), title:rows.fieldByName('title'), group:rows.fieldByName('group'), contacted:rows.fieldByName('contacted'), id:rows.fieldByName('ROWID')});
+		retData.push({name:rows.fieldByName('name'), title:rows.fieldByName('title'), group:rows.fieldByName('group'), leadsum:rows.fieldByName('leadsum'), contacted:rows.fieldByName('contact'), id:rows.fieldByName('ROWID')});
 		rows.next();
 	}
 	db.close();
